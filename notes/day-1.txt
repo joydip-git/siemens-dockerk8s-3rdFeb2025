@@ -57,7 +57,108 @@ Image
 	=> contains code + required tools/runtim/files (dependencies)
 	=> layer-based and read-only
 	=> images do not contain data
-	
+
+hypervisor:
+------------------
+a s/w which is used to manage VMs.
+VMM => VM monitor
+
+1. resource allocation
+2. isolation
+3. virtualization
+
+types: 
+	Type-1: a bare-minimum/metal hypervisor seating at the the top of host o/s
+		Hyper-V
+	Type-2: a full-fledge s/w (app) which is installed in the actual machine
+		ex: VirtualBox, VMware
+
+
+WSL => Windows Sub-system for Linux
+
+linux os flavors:
+	Ubuntu
+	Debian
+	......
+
+FROM: Set the baseImage to use for subsequent instructions. FROM must be the first instruction in a Dockerfile
+
+FROM node:alpine
+
+Set the working directory for any subsequent ADD, COPY, CMD, ENTRYPOINT, or RUN instructions that follow it in the Dockerfile.
+WORKDIR /app
+
+COPY . /app
+
+CMD [ "node","app.js" ]
+
+./app>node app.js
+
+docker image build command:
+Aliases:
+  docker build, docker builder build, docker image build, docker buildx b
+-------------------------------------------------------------------------------
+first-app> docker build -t first-app-image:1.0.0 .
+
+inspect an image:
+-----------------------------
+>docker image inspect first-app-image:1.0.0
+
+print the list of images:
+-------------------------
+>docker image ls
+
+remove the list of images:
+-------------------------
+>docker image rm image1, image2, ....
+
+create and run a container:
+-----------------------------
+>docker run <image-name>:<tag-name>
+
+check currently running containers: [aliases: docker container ls, docker container list, docker container ps, docker ps]
+--------------------------------------------
+>docker ps
+
+check all containers (runing and/or stoped):
+-------------------------------------------------
+>docker ps -a [ps -> processes, a -> all]
+
+remove containers [ aliases: docker container rm, docker container remove]
+-----------------------------------------------------------------------------
+>docker rm <container-name>
+
+stop the container
+-----------------------
+>docker stop <container-name/id> (does not remove the container)
+
+o/p: hello docker
+
+start an existing container:
+----------------------------------------
+>docker start <cotainer-name> [** it will start by default in detatched mode (will not block the terminal to log)]
+
+>docker start -a <cotainer-name> [** it will start in attatched mode (will block the terminal to log)]
+
+run the container in detatched mode:
+----------------------------------------
+>docker run -d --name first-app-cont-1 first-app-image:1.0.0
+
+o/p: b453ac9dd5f8e8c009911dc67e1ea710e018cc9c70846e0cd1e2a8adbeb64b78 (cont-id)
+
+print the logs (if the container is running in detached mode) of the container:
+-----------------------------------------------------------------------------
+docker logs <container-name/id>
+Note: the "logs" command attaches the container with the terminal (the container will be in attached mode to display the logs. once the logs are displayed it will be back to detached mode)
+
+bring the container back to attached mode, if its running in detatched mode:
+--------------------------------------------------------------------------------
+>docker logs -f <container-name/id> [it will print the old logs of the app in the container and will follow the furure logs, i.e., the container will be blocking the terminal -> attached mode]
+
+
+
+
+
 	
 
 

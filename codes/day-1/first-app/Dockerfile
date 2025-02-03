@@ -1,4 +1,12 @@
 FROM node:alpine
-COPY . /app
+
 WORKDIR /app
-CMD [ "node","app.js" ]
+
+COPY . .
+# COPY ./app.js .
+# COPY ./package.json .
+# COPY ./package-lock.json .
+
+CMD ["node","app.js"]
+
+
