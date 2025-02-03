@@ -128,6 +128,10 @@ remove containers [ aliases: docker container rm, docker container remove]
 -----------------------------------------------------------------------------
 >docker rm <container-name>
 
+Note: remove the container when it is stopped
+---------------------------------------------------
+>docker run --rm --name api-cont-1 api-image:1.0.
+
 stop the container
 -----------------------
 >docker stop <container-name/id> (does not remove the container)
@@ -156,9 +160,51 @@ bring the container back to attached mode, if its running in detatched mode:
 >docker logs -f <container-name/id> [it will print the old logs of the app in the container and will follow the furure logs, i.e., the container will be blocking the terminal -> attached mode]
 
 
-
-
-
+dotnet/java
 	
+	FROM <image-dotnet tool> as compilation
+	=> source code compilation [need dotnet tool for comilation]
 
+	workdir
+	copy
+	cmd["dotnet build","..."]
+
+
+	FROM <image-dotnet runtime> as production
+	copy from compilation
+	=> run the compiled code [need dotnet runtime to runtime]
+
+
+
+app:
+	runtime => nodejs
+	other libraries: dotenv, express, body-parser
+
+
+docker container running an app which wants to expose a port
+------------------------------------------------------------------
+docker run -d --port 3000:3001 --name api-cont-1 api-image:1.0.0
+
+persisting and reading data in docker containerized app:
+-----------------------------------------------------------------------------
+1. container layer:  
+every container comes up with a read-write enabled thin layer of file system, which persists over container shutdown. so, when the next time same container is run you can have the data back.
+but, when the container is removed the data is lost
+
+2. volumes: 
+	are managed by docker
+	view all volumes: >docker volume ls
+	remove all volumes:
+		one by one: >docker volume rm <vol-name/id>
+		all: >docker volume prune
+
+a. anonymous volume:
+	>docker run -d -p 3000:3001 --name <con-name> -v <file-path> <image-name>
+
+this type are anonymous as there is no name, just an id
+when the container is removed and again new container is created and run, again new anonymous volumes will be created, NOT the old ones, used in the last run.
+
+Note: anonymous volumes will be automatically removed when the container is stopped, if the container is run with "--rm" command (which removes the container when stopped)
+
+>docker run --rm -d -p 3000:3001 --name api-cont-1 -v /app/feedback -v /app/temp  api-image:1.0.0
 

@@ -1,7 +1,9 @@
 const fs = require('fs').promises;
 const exists = require('fs').existsSync;
 const path = require('path');
+const dotenv = require('dotenv')
 
+dotenv.config()
 const express = require('express');
 const bodyParser = require('body-parser');
 
@@ -41,5 +43,5 @@ app.post('/create', async (req, res) => {
   }
 });
 
-const PORT = process.env.PORT
+const PORT = process.env.PORT | 3000;
 app.listen(PORT, () => console.log('server running using port: ' + PORT));

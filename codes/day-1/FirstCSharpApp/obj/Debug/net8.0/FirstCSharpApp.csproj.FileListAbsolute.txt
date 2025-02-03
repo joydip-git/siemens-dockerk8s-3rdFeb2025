@@ -1,0 +1,15 @@
+D:\training\siemens-dockerk8s-3rdFeb2025\codes\day-1\FirstCSharpApp\bin\Debug\net8.0\FirstCSharpApp.exe
+D:\training\siemens-dockerk8s-3rdFeb2025\codes\day-1\FirstCSharpApp\bin\Debug\net8.0\FirstCSharpApp.deps.json
+D:\training\siemens-dockerk8s-3rdFeb2025\codes\day-1\FirstCSharpApp\bin\Debug\net8.0\FirstCSharpApp.runtimeconfig.json
+D:\training\siemens-dockerk8s-3rdFeb2025\codes\day-1\FirstCSharpApp\bin\Debug\net8.0\FirstCSharpApp.dll
+D:\training\siemens-dockerk8s-3rdFeb2025\codes\day-1\FirstCSharpApp\bin\Debug\net8.0\FirstCSharpApp.pdb
+D:\training\siemens-dockerk8s-3rdFeb2025\codes\day-1\FirstCSharpApp\obj\Debug\net8.0\FirstCSharpApp.GeneratedMSBuildEditorConfig.editorconfig
+D:\training\siemens-dockerk8s-3rdFeb2025\codes\day-1\FirstCSharpApp\obj\Debug\net8.0\FirstCSharpApp.AssemblyInfoInputs.cache
+D:\training\siemens-dockerk8s-3rdFeb2025\codes\day-1\FirstCSharpApp\obj\Debug\net8.0\FirstCSharpApp.AssemblyInfo.cs
+D:\training\siemens-dockerk8s-3rdFeb2025\codes\day-1\FirstCSharpApp\obj\Debug\net8.0\FirstCSharpApp.csproj.CoreCompileInputs.cache
+D:\training\siemens-dockerk8s-3rdFeb2025\codes\day-1\FirstCSharpApp\obj\Debug\net8.0\FirstCSharpApp.sourcelink.json
+D:\training\siemens-dockerk8s-3rdFeb2025\codes\day-1\FirstCSharpApp\obj\Debug\net8.0\FirstCSharpApp.dll
+D:\training\siemens-dockerk8s-3rdFeb2025\codes\day-1\FirstCSharpApp\obj\Debug\net8.0\refint\FirstCSharpApp.dll
+D:\training\siemens-dockerk8s-3rdFeb2025\codes\day-1\FirstCSharpApp\obj\Debug\net8.0\FirstCSharpApp.pdb
+D:\training\siemens-dockerk8s-3rdFeb2025\codes\day-1\FirstCSharpApp\obj\Debug\net8.0\FirstCSharpApp.genruntimeconfig.cache
+D:\training\siemens-dockerk8s-3rdFeb2025\codes\day-1\FirstCSharpApp\obj\Debug\net8.0\ref\FirstCSharpApp.dll

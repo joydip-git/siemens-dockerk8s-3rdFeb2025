@@ -7,6 +7,10 @@ COPY . .
 # COPY ./package.json .
 # COPY ./package-lock.json .
 
+
+
 CMD ["node","app.js"]
+
+
 
 
