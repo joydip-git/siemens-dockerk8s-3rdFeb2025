@@ -1,0 +1,63 @@
+java, C# app, node js etc....
+
+challenges for app deployment:
+------------------------------------------
+dependencies (s/w, config files etc.) of the app
+scale up
+dev and prod en might be different
+different projects and different dependencies  - install and uninstall
+
+expected solution:
+-------------------
+1. same environment for dev and prod
+2. if there is common app dev env/setup can be shared with the new member of the team
+3. we don't want to repeatedly un/install 
+4. dependencies are properly placed in every system where the app is running
+
+solutions:
+----------------
+Viual Machines
+	=> separate environments
+	=> env specific files
+	=> common env file can be shared among the VMs
+
+cons 
+	=> duplication of s/w dependencies in every VM
+	=> since they are VMs they will have full fledge O/S
+	=> boot up time is longer
+
+
+Core of every O/S => Kernel [provides minimum APIs]
+
+Containers:
+--------------------------------------
+a running piece of your s/w (app)
+
+containerization: 
+------------------------------
+a standarized way to create a package containing information and instruction about
+	-> what are the dependencies of the app to run
+	-> O/S kernel which provides access to file system
+	-> while the app is running how to access that file sytem from the app
+	-> any config file required for the app
+a standarized way to create a package [code of the app/sw and the dependencies of the app]
+
+a containerization package produces the same container with the same app running in the exact same environment everywhere
+
+Docker => 
+	containerization technique
+	tool to create and manage the containers
+
+blueprint => Image
+
+file => set of instructions about code and its dependencies => [docker] => image => container
+
+Image
+	=> template/blueprint for containers
+	=> contains code + required tools/runtim/files (dependencies)
+	=> layer-based and read-only
+	=> images do not contain data
+	
+	
+
+
