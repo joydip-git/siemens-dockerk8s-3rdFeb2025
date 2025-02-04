@@ -23,7 +23,13 @@ remove a volume:
 >docker volume rm <vol-name/id>
 
 
-"D:\training\siemens-dockerk8s-3rdFeb2025\codes\day-2\data-volumes-app\"
+c. Bind Mounts:
+----------------------------
+bind host system file path to a app file path running inside a container
+
+/run/desktop/mnt/host/d/training/siemens-dockerk8s-3rdFeb2025/codes/day-2/data-volumes-app/pages⁠
+
+d. TMPFS mounts
 
 
 clear the build cache (all and forcefully):
