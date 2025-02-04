@@ -26,14 +26,70 @@ remove a volume:
 c. Bind Mounts:
 ----------------------------
 bind host system file path to a app file path running inside a container
+>docker run -d --rm -p 3000:3001 --name api-cont-1 -v feedback:/app/feedback -v /app/temp -v D:/......./data-vlumes-app/pages:/app/pages api-image:1.0.0
+
+bind mount: -v D:/......./data-vlumes-app/pages:/app/pages
 
 /run/desktop/mnt/host/d/training/siemens-dockerk8s-3rdFeb2025/codes/day-2/data-volumes-app/pages⁠
 
 d. TMPFS mounts
+create using --tmpfs flag
+the data in this case is in-memory (host) data
+removed when the container is stopped
+can't be shared between the containers
+this is available ONLY with running Docker on linux
 
+>docker run -d --rm 
+-p 3000:3001 
+--name api-cont-1
+-v feedback:/app/feedback [named volume]
+-v /app/node_modules [anonymous vlume]
+-v D:/training/siemens-dockerk8s-3rdFeb2025/codes/day-2/data-volumes-app/pages:/app/pages [bind nount]
+--tmpfs /app/temp [tmpfs mount]
+api-image:1.0.0
+
+
+storage
+	=> writable container layer
+	=> mounts
+		a. volumes
+			i. anonymous
+			ii. named
+		b. bind mounts
+		c. tmpfs mounts
 
 clear the build cache (all and forcefully):
 -----------------------------------------------
 >docker buildx prune --force
 
 >docker build -t api-image .
+
+
+what is image?????
+-----------------------------
+package containing -
+	all of the files, binraies and setup/configurations to run the a container
+
+1. images are immutable - once created can't be modified
+2. create new images, which will add changes "at the top of it"
+3. images are composed of layers
+	each layer represents a set of file system changes that will add, remove or modify files. every layer is immutable.
+
+
+linux package manager - apt
+windows package manager - chocolatey
+
+
+storage drivers:
+	store the image layers
+	store data in writable layer of the container
+
+storage drivers:
+	overlay2 (*), fuse-overlayfs, btrfs, zfs, vfs
+
+docker volumes and mounts etc. -  NOT managed by docker storage driver
+
+
+
+
+	
