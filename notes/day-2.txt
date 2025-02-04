@@ -89,6 +89,102 @@ storage drivers:
 
 docker volumes and mounts etc. -  NOT managed by docker storage driver
 
+environment variables:
+-----------------------------------
+1. mention the variable and value in Dockerfile
+ENV <key>=<value>
+this information will be baked into image itself and form there will be passed to the container and then will be supplied to the runtime of the application running inside the container
+
+2. pass via docker run command (don't write in the Dockerfile)
+
+a. supplying the whole file containing env variables
+>docker run -d --rm -p 3000:3001 --name api-cont-4 --env-file .env api-image:2.0.0
+
+b. supplying the env variables individually
+>docker run -d --rm -p 3001:3001 --name api-cont-4 -e PORT=3001 -e MESSAGE=hello api-image:2.0.0
+
+c. using both techniques together:
+>docker run -d --rm -p 3004:3004 --name api-cont-5 --env-file .env -e MESSAGE=hello api-image:2.0.0
+
+
+
+networking:
+-----------------------
+a. how to connect to an containerized app from the local machine [-p 3000:3000]
+b. how a containerized app can send request to WWW (nothing to do)
+c. how a containerized app can access another containerized app
+	1. accessing the IP address of the target container from the client cotainer [localhost (127.0.0.1) -> not correct]
+	2. make both the container part of the same network and they will interact using their container name, as the container name act as DNS name.
+
+d. how a containerized app can access a service from local machine
+
+
+create network:
+----------------------------
+docker network create fav-network
+
+connect an running container with a network
+------------------------------------------
+>docker network connect <con-name> <network-name>
+>docker network connect mongoserver fav-network
+
+
+start a containe and connect to a network at the same time
+---------------------------------------------------------------
+>docker run --rm -p 3000:3002 --name api-cont-1 --network fav-network api-image:3.0.0
+
+
+inspect a network
+----------------------
+docker network inspect fav-network
+
+result: 
+[
+    {
+        "Name": "fav-network",
+        "Id": "065736e48273de3b8656b4f1da1527f046a3f3b9545fff3931f5b49fd6660c0c",
+        "Created": "2025-02-04T12:11:20.962336252Z",
+        "Scope": "local",
+        "Driver": "bridge",
+        "EnableIPv6": false,
+        "IPAM": {
+            "Driver": "default",
+            "Options": {},
+            "Config": [
+                {
+                    "Subnet": "172.18.0.0/16",
+                    "Gateway": "172.18.0.1"
+                }
+            ]
+        },
+        "Internal": false,
+        "Attachable": false,
+        "Ingress": false,
+        "ConfigFrom": {
+            "Network": ""
+        },
+        "ConfigOnly": false,
+        "Containers": {
+            "3fd2606e108881c5e64a6ff1bd1db76d354203a5860c0e081a2a8488405fbc5b": {
+                "Name": "mongoserver",
+                "EndpointID": "3722d5e1b9dd22e122bfd6d0b8b44299e2dd7be21e13c5734744392dca281799",
+                "MacAddress": "02:42:ac:12:00:02",
+                "IPv4Address": "172.18.0.2/16",
+                "IPv6Address": ""
+            },
+            "7b52c4d04b9cb945b72dd6a5773b098ecf0a6a39b3e6b2b21d08419c26faad43": {
+                "Name": "api-cont-1",
+                "EndpointID": "7fcfe657f659de72c88d2d76352e0539803b622687b6b940ac7adebc5ad56a3b",
+                "MacAddress": "02:42:ac:12:00:03",
+                "IPv4Address": "172.18.0.3/16",
+                "IPv6Address": ""
+            }
+        },
+        "Options": {},
+        "Labels": {}
+    }
+]
+
 
 
 

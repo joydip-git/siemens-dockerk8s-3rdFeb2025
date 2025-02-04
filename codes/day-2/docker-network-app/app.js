@@ -69,13 +69,14 @@ app.get('/people', async (req, res) => {
 // app.listen(3000, () => console.log('server is running on port 3000'))
 
 mongoose.connect(
-  //'mongodb://172.17.0.2:27017/swfavorites',
-  'mongodb://localhost:27017/swfavorites',
+  //'mongodb://localhost:27017/swfavorites', <- local machine IP => localhost or 127.0.0.1
+  //"mongodb://172.17.0.3:27017/swfavorites", <- container IP of mongo => 172.17.0.3
+  "mongodb://mongoserver:27017/swfavorites",
   { useNewUrlParser: true }
 ).then(
   (value) => {
     console.log(value.connection);
-    app.listen(3000, () => console.log('server is running on port 3000'))
+    app.listen(3002, () => console.log('server is running on port 3002'))
   },
   (err) => {
     console.log(err);
