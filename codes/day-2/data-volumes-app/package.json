@@ -1,0 +1,14 @@
+{
+  "name": "data-volume-example",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "author": "Joydip",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "data-volume-example": "file:",
+    "dotenv": "^16.4.7",
+    "express": "^4.17.1"
+  }
+}

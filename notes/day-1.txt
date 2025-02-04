@@ -189,7 +189,7 @@ persisting and reading data in docker containerized app:
 -----------------------------------------------------------------------------
 1. container layer:  
 every container comes up with a read-write enabled thin layer of file system, which persists over container shutdown. so, when the next time same container is run you can have the data back.
-but, when the container is removed the data is lost
+but, when the container is removed the data is lost.
 
 2. volumes: 
 	are managed by docker
