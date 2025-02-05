@@ -4,7 +4,7 @@ const app = express()
 app.get(
     '/',
     (req, res) => {
-        res.end('welcome to message app')
+        res.end('welcome to K8s message app')
     }
 )
 app.get('/welcome/:name', (req, res) => {
@@ -17,7 +17,7 @@ app.get('/welcome/:name', (req, res) => {
                 <title>Index</title>
             </head>
             <body>
-                <h2>Welcome to Node JS with Docker & Kubernetes ${name}</h2>
+                <h2>Welcome to Kubernetes Rollout ${name}</h2>
             </body>
         </html>`
     ).status(200)

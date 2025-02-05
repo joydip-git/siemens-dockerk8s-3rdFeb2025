@@ -32,10 +32,31 @@ docker-compose down
 all containers will be part of a network created by default by the docker-compose tool
 all containers run in --rm mode
 
+create an image
+-------------------
+docker build -t restful-api:1.0.0 .
+re-tag the image with the private repository acc-name
+
+while pushing it into dockerhub:
+-----------------------------------
+retagging:
+-----------------------
+docker image tag <source-img-name> <target-image-name>
+target-image-name => <acc-name>/<repo-name>:<tag>
+
+push image into dockerhub:
+-----------------------------------
+docker push <acc-name>/<repo-name>:<tag>
+docker push joydipdocker/restful-api:v1
+
+pull
+------------
+docker pull joydipdocker/restful-api:v1
+
 
 Kubernetes:
 ------------------------------
-1. kubectl:will send instructions to the master node in the cluster....
+1. kubectl:will send instructions to the master node in the cluster from the local machine
 2. minikube: set up the dummy cluster
 
 run the powershell in admin mode for the following:
@@ -54,5 +75,224 @@ Test to ensure the version you installed is up-to-date
 minikube installation:
 >choco install minikube
 
+
+Minikube commands:
+-------------------------------
 start the cluster
 >minikube start
+
+check status of the cluster:
+>minikube status
+
+
+to view the dashboard
+>minikube dashboard
+
+
+deployment object:
+------------------------------
+a. create a depolyment to control pod on a worker node:
+>kubectl create deployment <name> --image=<image-to-pull>
+
+b. delete a deployment:
+>kubectl delete deployment <name>
+
+c. get all deployments:
+>kubectl get deployments
+
+NAME          READY   UP-TO-DATE   AVAILABLE   AGE
+restful-dep   1/1     1            1           5m4s
+
+
+update the deployment (to use new image)
+the container name is actually the image name itself sans the tag name
+
+>kubectl set image deployment/<dep-name> <container-name> = <image-to-pull>
+>kubectl set image deployment/restful-dep restful-api=joydipdocker/restful-api:v2
+
+d. scale-up:
+>kubectl scale deployment/restful-dep --replicas=3
+
+e. get pods
+>kubectl get pods
+
+NAME                           READY   STATUS    RESTARTS   AGE
+restful-dep-5f4858985f-8wmp2   1/1     Running   0          8m57s
+restful-dep-5f4858985f-bb2f9   1/1     Running   0          3m10s
+restful-dep-5f4858985f-n2tmc   1/1     Running   0          3m10s
+
+with more information:
+>kubectl get pods -o wide
+NAME                           READY   STATUS    RESTARTS   AGE   IP           NODE       NOMINATED NODE   READINESS GATES
+restful-dep-5f4858985f-8wmp2   1/1     Running   0          12m   10.244.0.6   minikube   <none>           <none>
+
+f. information about scaling up or down:
+--------------------------------------------------
+>kubectl describe deployment/restful-dep
+
+Name:                   restful-dep
+Namespace:              default
+CreationTimestamp:      Wed, 05 Feb 2025 14:43:05 +0530
+Labels:                 app=restful-dep
+Annotations:            deployment.kubernetes.io/revision: 1
+Selector:               app=restful-dep
+Replicas:               1 desired | 1 updated | 1 total | 1 available | 0 unavailable
+StrategyType:           RollingUpdate
+MinReadySeconds:        0
+RollingUpdateStrategy:  25% max unavailable, 25% max surge
+Pod Template:
+  Labels:  app=restful-dep
+  Containers:
+   restful-api:
+    Image:         joydipdocker/restful-api:v1
+    Port:          <none>
+    Host Port:     <none>
+    Environment:   <none>
+    Mounts:        <none>
+  Volumes:         <none>
+  Node-Selectors:  <none>
+  Tolerations:     <none>
+Conditions:
+  Type           Status  Reason
+  ----           ------  ------
+  Progressing    True    NewReplicaSetAvailable
+  Available      True    MinimumReplicasAvailable
+OldReplicaSets:  <none>
+NewReplicaSet:   restful-dep-5f4858985f (1/1 replicas created)
+Events:
+  Type    Reason             Age   From                   Message
+  ----    ------             ----  ----                   -------
+  Normal  ScalingReplicaSet  13m   deployment-controller  Scaled up replica set restful-dep-5f4858985f from 0 to 1
+  Normal  ScalingReplicaSet  8m3s  deployment-controller  Scaled up replica set restful-dep-5f4858985f from 1 to 3
+  Normal  ScalingReplicaSet  4m8s  deployment-controller  Scaled down replica set restful-dep-5f4858985f from 3 to 1
+
+
+Services:
+--------------------
+internal IP address for every pod ->  not possible to access from "outside"
+app->container->pod->workernode->cluster->cloud provider
+
+it exposes as well as gropus multiple pods in a worker node
+a policy to interact with them
+tracks changes in the IPs and DNS names(pods can be created and destroyed)
+
+type of services:
+ClusterIP:
+	default service
+	used for internal communication between an app inside a container and the cluster
+	not possible to access the app in a contaner in a pod in the workernode in the cluster from outside the cluster
+
+NodePort:
+	preferred services for non-HTTP comunication
+	used to expose app to external clients
+	it does not provide any load balancing facility and even failover capabilities
+	it is used in testing phase
+
+LoadBalancer:
+	it uses a load balancer implementation from your cloud provider	
+	used to distribute traffic acorss pods based on the load
+	it allows admin to configure additional settings like scaling, firewalls and request routing
+
+ExternalName:
+	
+create and view service:
+-------------------------------------------------
+>kubectl expose deployment restful-dep --port 3000 --type=LoadBalancer
+
+>kubectl get services
+NAME          TYPE           CLUSTER-IP      EXTERNAL-IP   PORT(S)          AGE
+kubernetes    ClusterIP      10.96.0.1       <none>        443/TCP          89m
+restful-dep   LoadBalancer   10.110.14.174   <pending>     3000:30176/TCP   10s
+
+>kubectl delete service <deployment-name>
+>kubectl delete service restful-dep
+
+after that use minikube to expose that IP and port created by service by using a different IP to the outside of he cluster
+>minikube service restful-dep
+
+|-----------|-------------|-------------|---------------------------|
+| NAMESPACE |    NAME     | TARGET PORT |            URL            |
+|-----------|-------------|-------------|---------------------------|
+| default   | restful-dep |        3000 | http://192.168.49.2:30176 |
+|-----------|-------------|-------------|---------------------------|
+* Starting tunnel for service restful-dep.
+|-----------|-------------|-------------|------------------------|
+| NAMESPACE |    NAME     | TARGET PORT |          URL           |
+|-----------|-------------|-------------|------------------------|
+| default   | restful-dep |             | http://127.0.0.1:50930 |
+|-----------|-------------|-------------|------------------------|
+
+
+rollout:
+rollout the update of an application 
+
+>kubectl rollout status deployment/restful-dep
+
+check history of rollout
+>kubectl rollout history deployment/restful-dep
+
+deployment.apps/restful-dep 
+REVISION  CHANGE-CAUSE
+1         <none>
+2         <none>
+3         <none>
+4         <none>
+5         <none>
+
+check history of rollout revision:
+>kubectl rollout history deployment/restful-dep --revision=2
+
+
+rolling back to a particular revision:
+>kubectl rollout undo deployment/restful-dep --to-revision=2
+
+
+Kuberenetes config file:
+--------------------------------
+Parts of the config file:
+	a. Metadata
+	b. specifiaction
+	c. status
+
+Components of the config file
+	a. Templates: is the blueprint for the pods
+	b. Labels and Selectors: two entities in a config file are connected using these
+	Labels come under metadata part and selectors come under specification part
+	c. Ports
+	
+
+
+Metadata:
+-------------
+data/information to identiy an object
+name of the component is present inside the metadata
+UID, optional namespace
+
+
+Specification: desired state of the kind that is mentioned in the metadata
+
+applying config file to automate:
+>kubectl apply -f <deployment-file>
+
+delete a deployment:
+
+using label (supply only key)
+>kubectl delete deployment -l group
+
+using name
+>kubectl delete deployment <name>
+
+using the file
+>kubectl delete -f <file>
+
+create service:
+>kubectl apply -f <service-file>
+
+delete service
+>kubectl delete -f <service-file>
+
+using label:
+>kubectl delete service -l <label-key>
+
+using name:
+>kubectl delete service <name>

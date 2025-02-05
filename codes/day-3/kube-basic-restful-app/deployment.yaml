@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: restful-dep
+  labels:
+    group: restful-dep-label
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      pods: restful-pods
+  template:
+    metadata:
+      labels:
+        pods: restful-pods
+    spec:
+      containers:
+        - name: restful-container
+          image: joydipdocker/restful-api:v2
+          imagePullPolicy: Always
+          resources:
+            limits:
+              memory: "128Mi"
+              cpu: "500m"
+          # ports:
+          #   - containerPort: 3000
