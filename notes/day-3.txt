@@ -1,0 +1,24 @@
+docker build -t api-image:1.0.0 .
+docker volume create feedback
+docker network create fav-network
+
+docker run 
+	-d
+	--rm
+	--name api-cont-1
+	-p 3000:3002
+	-e PORT=3002
+	--env-file .env
+	-v feedback:/app/feedback
+	-v temp:/app/temp
+	-v d:/...../app-name:/app
+	--tmpfs /app/node_modules
+	--network fav-network
+	api-image:1.0.0
+
+
+
+config based
+	docker-compose.yaml => 
+
+docker-compose tool => up and down

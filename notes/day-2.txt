@@ -107,7 +107,6 @@ c. using both techniques together:
 >docker run -d --rm -p 3004:3004 --name api-cont-5 --env-file .env -e MESSAGE=hello api-image:2.0.0
 
 
-
 networking:
 -----------------------
 a. how to connect to an containerized app from the local machine [-p 3000:3000]
@@ -125,7 +124,7 @@ docker network create fav-network
 
 connect an running container with a network
 ------------------------------------------
->docker network connect <con-name> <network-name>
+>docker network connect <container-name> <network-name>
 >docker network connect mongoserver fav-network
 
 

@@ -1,0 +1,18 @@
+{
+  "name": "sqlserver-app",
+  "version": "1.0.0",
+  "main": "app.js",
+  "scripts": {
+    "start": "node ./src/server.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "express": "^4.21.1",
+    "msnodesqlv8": "^4.4.0",
+    "mssql": "^11.0.1",
+    "sqlserver-app": "file:"
+  }
+}
