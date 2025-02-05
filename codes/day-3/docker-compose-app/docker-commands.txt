@@ -8,7 +8,7 @@ docker network create goals-net
 Run MongoDB Container
 ---------------------
 
-docker run --name mongoserver -e MONGO_INITDB_ROOT_USERNAME=root -e MONGO_INITDB_ROOT_PASSWORD=secret -v data:/data/db --rm -d --network goals-net mongo
+docker run --rm -d --name mongoserver -e MONGO_INITDB_ROOT_USERNAME=root -e MONGO_INITDB_ROOT_PASSWORD=secret -v data:/data/db  --network goals-net mongo
 
 ---------------------
 Build Node API Image
@@ -40,3 +40,8 @@ Stop all Containers
 
 docker stop mongodb goals-backend goals-frontend
 
+to run services:
+docker-compose up -d
+
+to stop all services:
+docker-compose down

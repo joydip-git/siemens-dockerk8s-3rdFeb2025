@@ -22,3 +22,12 @@ config based
 	docker-compose.yaml => 
 
 docker-compose tool => up and down
+
+to run services:
+docker-compose up -d
+
+to stop all services:
+docker-compose down
+
+all containers will be part of a network created by default by the docker-compose tool
+all containers run in --rm mode

@@ -1,6 +1,6 @@
 const { connect } = require('mssql');
 
-const CONNECTION_STRING = 'server=localhost/sqlexpress,1433;database=siemensdb;user id=sa;password=sqlserver2024;TrustServerCertificate=True'
+const CONNECTION_STRING = 'server=host.docker.internal/sqlexpress,1433;database=siemensdb;user id=sa;password=sqlserver2024;TrustServerCertificate=True'
 
 const getProducts = async () => {
     let pool;

@@ -110,12 +110,17 @@ c. using both techniques together:
 networking:
 -----------------------
 a. how to connect to an containerized app from the local machine [-p 3000:3000]
-b. how a containerized app can send request to WWW (nothing to do)
-c. how a containerized app can access another containerized app
-	1. accessing the IP address of the target container from the client cotainer [localhost (127.0.0.1) -> not correct]
-	2. make both the container part of the same network and they will interact using their container name, as the container name act as DNS name.
+	the containerized app has to expose a port that should be mapped to an host machine port
 
-d. how a containerized app can access a service from local machine
+b. how a containerized app can send request to WWW (nothing to do)
+	nothing to do here..permitted
+
+c. how a containerized app can access a service from local machine
+	whichever service you are trying to reach out from the containerized app, that app should use "host.docker.internal" as the dns name for that host machone service.
+
+d. how a containerized app can access another containerized app/service
+	1. accessing the IP address of the target container from the client cotainer (localhost will not work in that case as the DNS name)
+	2. make both the container part of the same network and they will interact using their container name, as the container name act as DNS name.
 
 
 create network:
