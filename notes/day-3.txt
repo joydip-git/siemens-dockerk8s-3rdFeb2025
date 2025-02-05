@@ -31,3 +31,28 @@ docker-compose down
 
 all containers will be part of a network created by default by the docker-compose tool
 all containers run in --rm mode
+
+
+Kubernetes:
+------------------------------
+1. kubectl:will send instructions to the master node in the cluster....
+2. minikube: set up the dummy cluster
+
+run the powershell in admin mode for the following:
+
+chocolatey installation:(package manager for windows)
+
+>Set-ExecutionPolicy Bypass -Scope Process -Force; [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072; iex ((New-Object System.Net.WebClient).DownloadString('https://community.chocolatey.org/install.ps1'))
+
+kubectl installtion:
+>choco install kubernetes-cli
+
+Test to ensure the version you installed is up-to-date
+>kubectl version --client
+
+
+minikube installation:
+>choco install minikube
+
+start the cluster
+>minikube start
